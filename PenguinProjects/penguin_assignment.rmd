@@ -164,7 +164,7 @@ Creating a new folder to store figures in:
 dir.create("figures")
 ```
 
-Producing a dot plot with lines for each species:
+Producing an interaction plot:
 
 ```{r}
 #Using function from "plotting.R" to produce graph
