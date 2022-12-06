@@ -38,7 +38,7 @@ dir.create("data")
 dir.create("data/data_raw")
 
 #Saving the raw data
-write.csv(penguins_raw, "data/data_raw/penguins_raw.csv")
+write.csv(penguins_raw, "data/data_raw/penguins_raw_06-12-2022.csv")
 ```
 
 Cleaning the data, creating a new folder for the clean data and saving the clean data:
@@ -87,6 +87,7 @@ head(penguins_mass, 3)
 
 
 \newpage
+
 ### Analysing the data:
 
 **Q: To what extent does the species and sex of a penguin influence body mass?**
@@ -128,7 +129,9 @@ Running ANCOVA:
 summary(lmSpecies_Sex_Mass_Interaction)
 ```
 There is a significant effect of interaction between species and sex on body mass.
+
 \newpage
+
 Comparing the two models:
 
 ```{r}
@@ -152,6 +155,7 @@ The comparisons between groups which are not significantly different are:
 
 
 \newpage
+
 ### Producing figures to display the data:
 
 Creating a new folder to store figures in:
