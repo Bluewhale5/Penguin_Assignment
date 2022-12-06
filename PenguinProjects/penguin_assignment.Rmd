@@ -1,0 +1,178 @@
+---
+title: "Penguin Assignment"
+author: "Anonymous"
+date: "04/12/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### Organising and cleaning data:
+
+Setting working directory as "PenguinProjects" folder (**please adjust to suit your working directory**):
+
+```{r}
+setwd("~/RWorkingDirectory/PenguinProjects")
+```
+
+Loading in libraries, data and functions:
+
+```{r}
+source("functions/libraries.r")
+source("functions/cleaning.r")
+source("functions/plotting.r")
+```
+
+Creating a new folder for the raw data and saving the raw data:
+
+```{r}
+#Creating a new data folder
+dir.create("data")
+
+#Creating a new raw data folder
+dir.create("data/data_raw")
+
+#Saving the raw data
+write.csv(penguins_raw, "data/data_raw/penguins_raw.csv")
+```
+
+Cleaning the data, creating a new folder for the clean data and saving the clean data:
+
+```{r}
+#Using function from "cleaning.r" to clean the data
+penguins_clean <- cleaning(penguins_raw)
+
+#Creating a new clean data folder
+dir.create("data/data_clean")
+
+#Saving the clean data
+write.csv(penguins_clean, "data/data_clean/penguins_clean_05-12-2022.csv")
+```
+
+Looking at the data:
+
+```{r}
+head(penguins_clean)
+```
+
+
+
+### Preparing data for analysis:
+
+Removing rows without sex or body mass recorded:
+
+```{r}
+#Using function from "cleaning.r" to prepare data
+penguins_mass <- remove_empty_body_mass(penguins_clean)
+
+#Saving mass data
+write.csv(penguins_mass, "data/data_clean/penguins_mass_05-12-2022.csv")
+
+#Displaying the data
+head(penguins_mass)
+```
+
+Defining factors and numerical variables:
+
+```{r, eval = FALSE}
+penguins_mass$species <- as.factor(penguins_mass$species)
+penguins_mass$sex <- as.factor(penguins_mass$sex)
+penguins_mass$body_mass_g <- as.numeric(penguins_mass$body_mass_g)
+```
+
+
+
+### Analysing the data:
+
+**Q: To what extent does the species and sex of a penguin influence body mass?**
+
+Creating a model with no interaction and testing assumptions of statistical analysis:
+
+```{r}
+#Creating the model
+lmSpecies_Sex_Mass_No_Interaction <- aov(body_mass_g ~ species + sex, data = penguins_mass)
+
+#Plotting to test assumptions
+par(mfrow = c(2,2))
+plot(lmSpecies_Sex_Mass_No_Interaction)
+```
+Overall, the data appears to meet assumptions of ANOVA.
+
+Running ANOVA:
+
+```{r}
+summary(lmSpecies_Sex_Mass_No_Interaction)
+```
+Both species and sex appear to have a significant effect on body mass.
+
+Building a model that takes into account interaction between species and sex:
+
+```{r}
+#Creating the model
+lmSpecies_Sex_Mass_Interaction <- aov(body_mass_g ~ species * sex, data = penguins_mass)
+
+#Plotting to test assumptions
+par(mfrow = c(2,2))
+plot(lmSpecies_Sex_Mass_Interaction)
+```
+Overall, the data appears to fit the assumptions of ANCOVA.
+
+Running ANCOVA:
+
+```{r}
+summary(lmSpecies_Sex_Mass_Interaction)
+```
+There is a significant effect of interaction between species and sex on body mass.
+
+Comparing the two models:
+
+```{r}
+anova(lmSpecies_Sex_Mass_No_Interaction,lmSpecies_Sex_Mass_Interaction)
+```
+Adding an interaction between species and sex significantly improves the model.
+
+Running a Tukey HSD test:
+
+```{r, eval = FALSE}
+#Using TukeyHSD test to compare between groups (results hidden here to keep document tidy)
+TukeyHSD(lmSpecies_Sex_Mass_Interaction)
+```
+The Tukey HSD test suggests significant differences between body mass of penguins grouped by species and sex.
+The comparisons between groups which are not significantly different are:
+1) Chinstrap females and Adelie females
+2) Chinstrap males and Adelie males
+
+
+
+### Producing figures to display the data:
+
+Creating a new folder to store figures in:
+
+```{r}
+dir.create("figures")
+```
+
+Producing a dot plot with lines for each species:
+
+```{r}
+source("functions/plotting.r")
+#Using function from "plotting.R" to produce graph
+plot_mass_figure(penguins_mass)
+```
+
+Saving the figure as a PNG file:
+
+```{r}
+#Using function from "plotting.R" to save figure as PNG
+save_mass_plot_png(penguins_mass, "figures/fig_01_06-12-2022.png", 20, 600, 1.4)
+```
+
+Saving the figure as an SVG file:
+
+```{r}
+#Using function from "plotting.R" to save figure as SVG
+save_mass_plot_svg(penguins_mass, "figures/fig_01_06-12-2022.svg", 20, 1.4)
+```
