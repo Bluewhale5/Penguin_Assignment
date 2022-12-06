@@ -28,7 +28,7 @@ source("functions/plotting.r")
 
 Creating a new folder for the raw data and saving the raw data:
 
-```{r}
+```{r, message=FALSE}
 #Creating a new data folder
 dir.create("data")
 
@@ -41,7 +41,7 @@ write.csv(penguins_raw, "data/data_raw/penguins_raw.csv")
 
 Cleaning the data, creating a new folder for the clean data and saving the clean data:
 
-```{r}
+```{r, message=FALSE}
 #Using function from "cleaning.r" to clean the data
 penguins_clean <- cleaning(penguins_raw)
 
@@ -151,14 +151,13 @@ The comparisons between groups which are not significantly different are:
 
 Creating a new folder to store figures in:
 
-```{r}
+```{r, message=FALSE}
 dir.create("figures")
 ```
 
 Producing a dot plot with lines for each species:
 
 ```{r}
-source("functions/plotting.r")
 #Using function from "plotting.R" to produce graph
 plot_mass_figure(penguins_mass)
 ```
