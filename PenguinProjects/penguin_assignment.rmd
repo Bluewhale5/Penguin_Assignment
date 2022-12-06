@@ -184,3 +184,11 @@ Saving the figure as an SVG file:
 #Using function from "plotting.R" to save figure as SVG
 save_mass_plot_svg(penguins_mass, "figures/fig_01_06-12-2022.svg", 20, 1.4)
 ```
+
+\newpage
+
+Session info:
+
+```{r}
+sessionInfo()
+```
