@@ -6,7 +6,7 @@ plot_mass_figure <- function(penguins_mass){
     ggplot(aes(x = species, color = sex, shape = sex, fill = sex, group = sex, y = body_mass_g)) +
     geom_jitter(alpha = 0.3, size = 2, position = position_jitter(width = 0.3, seed = 0)) +
     scale_x_discrete(labels=c("Adelie","Chinstrap","Gentoo")) +
-    stat_summary(fun = mean, geom = "point", size = 2) + # shape = 22, size = 1.5) +
+    stat_summary(fun = mean, geom = "point", size = 2) +
     stat_summary(fun = mean, geom = "line", size = 0.8, alpha = 0.5) +
     stat_summary(fun.data = mean_cl_normal,  
                  geom = "errorbar", alpha = 1, width = 0.3, size = 0.8) + 
