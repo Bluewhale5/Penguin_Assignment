@@ -1,11 +1,13 @@
 ---
 title: "Penguin Assignment"
 author: "Anonymous"
-date: "04/12/2022"
-output: html_document
+date: "06/12/2022"
+output:
+  pdf_document: default
+  html_document: default
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -28,7 +30,7 @@ source("functions/plotting.r")
 
 Creating a new folder for the raw data and saving the raw data:
 
-```{r, message=FALSE}
+```{r, warning=FALSE}
 #Creating a new data folder
 dir.create("data")
 
@@ -41,7 +43,7 @@ write.csv(penguins_raw, "data/data_raw/penguins_raw.csv")
 
 Cleaning the data, creating a new folder for the clean data and saving the clean data:
 
-```{r, message=FALSE}
+```{r, warning=FALSE}
 #Using function from "cleaning.r" to clean the data
 penguins_clean <- cleaning(penguins_raw)
 
@@ -49,12 +51,12 @@ penguins_clean <- cleaning(penguins_raw)
 dir.create("data/data_clean")
 
 #Saving the clean data
-write.csv(penguins_clean, "data/data_clean/penguins_clean_05-12-2022.csv")
+write.csv(penguins_clean, "data/data_clean/penguins_clean_06-12-2022.csv")
 ```
 
 Looking at the data:
 
-```{r}
+```{r, eval = FALSE}
 head(penguins_clean)
 ```
 
@@ -68,23 +70,23 @@ Removing rows without sex or body mass recorded:
 #Using function from "cleaning.r" to prepare data
 penguins_mass <- remove_empty_body_mass(penguins_clean)
 
-#Saving mass data
-write.csv(penguins_mass, "data/data_clean/penguins_mass_05-12-2022.csv")
-
-#Displaying the data
-head(penguins_mass)
-```
-
-Defining factors and numerical variables:
-
-```{r, eval = FALSE}
+#Defining factors and numerical variables
 penguins_mass$species <- as.factor(penguins_mass$species)
 penguins_mass$sex <- as.factor(penguins_mass$sex)
 penguins_mass$body_mass_g <- as.numeric(penguins_mass$body_mass_g)
+
+#Saving mass data
+write.csv(penguins_mass, "data/data_clean/penguins_mass_06-12-2022.csv")
+```
+
+Looking at the data:
+
+```{r}
+head(penguins_mass, 3)
 ```
 
 
-
+\newpage
 ### Analysing the data:
 
 **Q: To what extent does the species and sex of a penguin influence body mass?**
@@ -126,7 +128,7 @@ Running ANCOVA:
 summary(lmSpecies_Sex_Mass_Interaction)
 ```
 There is a significant effect of interaction between species and sex on body mass.
-
+\newpage
 Comparing the two models:
 
 ```{r}
@@ -141,17 +143,20 @@ Running a Tukey HSD test:
 TukeyHSD(lmSpecies_Sex_Mass_Interaction)
 ```
 The Tukey HSD test suggests significant differences between body mass of penguins grouped by species and sex.
+
 The comparisons between groups which are not significantly different are:
+
 1) Chinstrap females and Adelie females
+
 2) Chinstrap males and Adelie males
 
 
-
+\newpage
 ### Producing figures to display the data:
 
 Creating a new folder to store figures in:
 
-```{r, message=FALSE}
+```{r, warning=FALSE}
 dir.create("figures")
 ```
 
@@ -164,14 +169,14 @@ plot_mass_figure(penguins_mass)
 
 Saving the figure as a PNG file:
 
-```{r}
+```{r, eval=FALSE}
 #Using function from "plotting.R" to save figure as PNG
 save_mass_plot_png(penguins_mass, "figures/fig_01_06-12-2022.png", 20, 600, 1.4)
 ```
 
 Saving the figure as an SVG file:
 
-```{r}
+```{r, eval=FALSE}
 #Using function from "plotting.R" to save figure as SVG
 save_mass_plot_svg(penguins_mass, "figures/fig_01_06-12-2022.svg", 20, 1.4)
 ```
