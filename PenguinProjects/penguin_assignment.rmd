@@ -64,7 +64,7 @@ head(penguins_clean)
 
 ### Preparing data for analysis:
 
-Removing rows without sex or body mass recorded:
+Removing rows without sex or body mass recorded and defining variables::
 
 ```{r}
 #Using function from "cleaning.r" to prepare data
