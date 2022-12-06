@@ -1,6 +1,6 @@
 # Penguin Assignment
 
-## Repository containing code and figures from work in the Palmer Penguins dataset
+## Repository containing code and figures from work on the Palmer Penguins dataset
 
 
 To run the analysis run the Rmarkdown file: ```penguin_assignment.rmd```
