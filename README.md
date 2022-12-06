@@ -3,7 +3,7 @@
 ## Repository containing code and figures from work on the Palmer Penguins dataset
 
 
-To run the analysis run the Rmarkdown file: ```"penguin_assignment.rmd"```
+To run the analysis download this repository and run the Rmarkdown file: ```"penguin_assignment.rmd"```
 
 
 Find the data located in `PenguinProjects/data`
