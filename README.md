@@ -11,3 +11,5 @@ Find the data located in `PenguinProjects/data`
 Find libraries and functions used in `PenguinProjects/functions`
 
 Find figures produced in `PenguinProjects/figures`
+
+Session information can be located at the end of ```"penguin_assignment.pdf"```
